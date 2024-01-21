@@ -32,7 +32,26 @@ export class PatientComponent implements OnInit {
     this.msg_text = "Adding Patient to the Network..."
     console.log(this.model);
     this.checkAddProgress()
-    this.patientService.addPatient(this.model.patID, this.model);
+    this.warn = false;
+    this.success = false;
+    this.patientService
+      .addPatient(this.model.patID, this.model)
+      .then((r: any) => {
+        this.success = true;
+        this.msg_text = 'Data added to IPFS...';
+        this.msg_text += '<br>User Added to the Blockchain';
+        console.log('User added Successfully');
+
+        this.model = {};
+      })
+      .catch((er: any) => {
+        this.warn = true;
+        this.msg_text =
+          'Adding Doctor Failed<br> <small class="fw-light text-danger"><b>"</b>' +
+          this.model.docID +
+          '<b>"</b></small><br>1.not a valid address or <br>2.Already have a role';
+        console.log(er);
+      });
   }
 
   checkAddProgress(){
