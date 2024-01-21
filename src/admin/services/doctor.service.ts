@@ -100,7 +100,7 @@ export class DoctorService {
     })
   }
   async addRecord(data: any) {
-    let IPFSHash = await (await (this.ipfs.add(Buffer.from(JSON.stringify(data))))).path
-    return IPFSHash
+    let IPFSHash = await (await (this.ipfs.add(Buffer.from(JSON.stringify(data))))).path;
+    return IPFSHash;
   }
 }

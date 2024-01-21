@@ -15,7 +15,7 @@ contract Contract {
     string drHash;
   }
 
-    struct Patient {
+  struct Patient {
     address id;
     string patHash;
   }
@@ -63,17 +63,18 @@ contract Contract {
   function isDr(address id) public view returns (bool) {
     return doctor.has(id);
   }
+  
+  function addPatInfo(address pat_id, string memory _patInfoHash) public {
+    
+    require(admin.has(msg.sender), "Only For Admin");
 
+    Patient storage patInfo = Patients[pat_id];
+    patInfo.id = pat_id;
+    patInfo.patHash = _patInfoHash;
+    PatIds.push(pat_id);
 
-   function addPatInfo(address pat_id, string memory _patInfoHash) public {
-        require(admin.has(msg.sender) == true, 'Only you Can Add your info ');
-        Patient storage patInfo = Patients[pat_id];
-        patInfo.id = pat_id;
-        patInfo.patHash = _patInfoHash;
-        PatIds.push(pat_id);
-
-        patient.add(pat_id);
-    }
+    patient.add(pat_id);
+  }
 
   
 

@@ -13,7 +13,7 @@ export class PatientService {
   contract: any;
   account: any;
 
-  ipfs: any;
+  ipfs: IPFSHTTPClient;
 
   addprogress: boolean = false;
   added: boolean = false;
@@ -55,14 +55,14 @@ export class PatientService {
   //   });
   // }
 
-  addPatient(pat_id: any, data: any) {
+  addPatient(pat_id: any, data: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.bs.getContract().then((c) => {
         this.bs.getCurrentAccount().then((a) => {
           this.addRecord(data).then((ipfsHash) => {
             c.methods
               .addPatInfo(pat_id, ipfsHash)
-              .send({ form: a })
+              .send({ from: a })
               .on('confirmation', (result: any) => {
                 if (result) {
                   resolve(result);
