@@ -19,6 +19,8 @@ export class PatientService {
   added: boolean = false;
   failed: boolean = false;
 
+  Patients: any;
+
   constructor(
     private bs: BlockchainService,
     ipfsService: IpfsService,
@@ -78,6 +80,12 @@ export class PatientService {
     });
   }
 
+  getPatientDetails(patId:any):Promise<any>{
+    return new Promise((resolve) => {
+      
+    })
+  };
+
   getAcccount() {
     console.log('geting Account...');
     let getacc = setInterval(() => {
@@ -87,6 +95,21 @@ export class PatientService {
         return this.account;
       }
     }, 1000);
+  }
+
+  getPatients(): Promise<any> {
+    return new Promise((resolve) => {
+      this.bs.getContract().then((contract: any) => {
+        this.Patients = contract.methods
+          .getAllDrs()
+          .call()
+          .then((docs: any) => {
+            this.Patients = docs;
+            console.log(this.Patients);
+            resolve(this.Patients);
+          });
+      });
+    });
   }
 
   async addRecord(data: any) {

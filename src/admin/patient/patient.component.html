@@ -1,4 +1,19 @@
 <div class="container-fluid">
+  <div>
+    <button
+        id="pills-home-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-home"
+        type="button"
+        role="tab"
+        aria-controls="pills-home"
+        aria-selected="true"
+        type="submit" id="btn" class="btn btn-primary mb-3"
+        (click)="GetPatients()"
+      >
+        View Patient
+      </button>
+  </div>
   <div class="container mb-4">
     <form [noValidate]="false" #docForm="ngForm" (ngSubmit)="onSubmit()">
       <h3 class="h3 my-3">Add Patient to the Network</h3>
