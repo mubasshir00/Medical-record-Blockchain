@@ -95,7 +95,7 @@ export class PatientComponent implements OnInit {
     this.showProgressCard = false;
   }
 
-  GetPatients() {
+  GetPatients():any {
     this.showProgressCard = true;
 
     this.PatientDetails = [];
@@ -110,6 +110,10 @@ export class PatientComponent implements OnInit {
 
       if (this.Patients.length >= 1) {
         this.loadPatientDetails();
+        this.progressMsg = "Found" + this.Patients.length + " Accounts";
+      } else {
+        this.progressMsg = 'No Patients in the Network....';
+        this.showProgressCard = false;
       }
     });
   }

@@ -20,6 +20,10 @@ export class PatientService {
   failed: boolean = false;
 
   Patients: any;
+  PatientDetails: any = [];
+
+  progressMsg: string = '';
+  showProgressCard: boolean = false;
 
   constructor(
     private bs: BlockchainService,
@@ -29,6 +33,7 @@ export class PatientService {
     this.contract = bs.getContract().then((c: any) => {
       return c;
     });
+    this.progressMsg = 'Loading Doctor Accounts From Blockchain';
     this.ipfs = ipfsService.getIPFS();
   }
 
@@ -80,11 +85,9 @@ export class PatientService {
     });
   }
 
-  getPatientDetails(patId:any):Promise<any>{
-    return new Promise((resolve) => {
-      
-    })
-  };
+  getPatientDetails(patId: any): Promise<any> {
+    return new Promise((resolve) => {});
+  }
 
   getAcccount() {
     console.log('geting Account...');
@@ -99,9 +102,9 @@ export class PatientService {
 
   getPatients(): Promise<any> {
     return new Promise((resolve) => {
-      this.bs.getContract().then((contract: any) => {
-        this.Patients = contract.methods
-          .getAllDrs()
+      this.bs.getContract().then((c: any) => {
+        this.Patients = c.methods
+          .getAllPatients()
           .call()
           .then((docs: any) => {
             this.Patients = docs;
@@ -110,6 +113,18 @@ export class PatientService {
           });
       });
     });
+  }
+
+  loadPatientDetails() {
+    this.PatientDetails = [];
+    for (var i = 0; i <= this.Patients.length; i++) {
+      if (this.Patients[i])
+        this.getPatientDetails(this.Patients[i]).then((data: any) => {
+          this.PatientDetails.push(data);
+        });
+    }
+    this.progressMsg = '';
+    this.showProgressCard = false;
   }
 
   async addRecord(data: any) {

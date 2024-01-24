@@ -76,6 +76,8 @@ contract Contract {
     patient.add(pat_id);
   }
 
-  
+  function getAllPatients() public view returns (address[] memory) {
+    return PatIds;
+  }
 
 }

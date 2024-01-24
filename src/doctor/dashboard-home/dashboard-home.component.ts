@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DoctorService } from '../services/doctor.service';
+import { PatientService } from 'src/admin/services/patient.service';
 
 @Component({
   selector: 'app-dashboard-home',
@@ -20,23 +21,30 @@ export class DashboardHomeComponent implements OnInit {
     imageHash: null,
   };
 
-  constructor(private doctorService: DoctorService) {
+  constructor(private doctorService: DoctorService,private patientService:PatientService) {
     this.DoctorDetails = [];
   }
 
   ngOnInit(): void {
     // this.check();
-    setTimeout(()=>{
-      this.getDoctorDetails()
-    },3000)
-    
+    setTimeout(() => {
+      this.getDoctorDetails();
+    }, 3000);
+
+    setTimeout(() => {
+      this.getPatientDetails();
+    }, 3000);
   }
 
-  async getDoctorDetails(){
-    this.doctorService.getDoctor().then((data:any) =>{
-      
-      this.DoctorDetails = JSON.parse(data)
-    })
+  async getDoctorDetails() {
+    this.doctorService.getDoctor().then((data: any) => {
+      this.DoctorDetails = JSON.parse(data);
+    });
   }
 
+  async getPatientDetails() {
+    this.patientService.getPatients().then((data: any) => {
+      this.DoctorDetails = JSON.parse(data);
+    });
+  }
 }
