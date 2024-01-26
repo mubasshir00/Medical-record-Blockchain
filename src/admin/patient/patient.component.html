@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <div>
     <button
+    class="btn btn-sm btn-primary"
         id="pills-home-tab"
         data-bs-toggle="pill"
         data-bs-target="#pills-home"
@@ -8,15 +9,14 @@
         role="tab"
         aria-controls="pills-home"
         aria-selected="true"
-        class="nav-link active"
         (click)="GetPatients()"
       >
-        View Patient
+        View Patients
       </button>
   </div>
-  <div class="container w-100">
-    <div class="content" *ngIf="DoctorDetails.length >= 1">
-      <div class="card mt-2" *ngFor="let Docdetails of DoctorDetails">
+  <div >
+    <div class="content" *ngIf="PatientDetails.length >= 1">
+      <div class="card mt-2" *ngFor="let Docdetails of PatientDetails">
         <div class="doctor w-100 p-2 d-flex flex-row align-items-center">
           <div class="doc-image">
             <img
@@ -33,9 +33,9 @@
             <div class="col">
               <div class="row py-2">
                 <div class="col-md-12">
-                  <b>DocID: </b>
+                  <b>Patient Id: </b>
                   <span class="docID">
-                    <b>{{ Docdetails.docID }}</b></span
+                    <b>{{ Docdetails.patID }}</b></span
                   >
                 </div>
               </div>
@@ -47,14 +47,8 @@
                     >{{ Docdetails.fName }} {{ Docdetails.lName }}</span
                     >
                   </div>
-                  <div>
-                    <b>Date of Joining : </b>
-                    <span class="Doj">{{ Docdetails.Doj }}</span>
-                  </div>
-                  <div>
-                    <b>Speciality: </b
-                    ><span class="speciality">{{ Docdetails.speciality }}</span>
-                  </div>
+                  
+                  
                 </div>
                 <div class="col-md-12 d-flex flex-column">
                   <div>

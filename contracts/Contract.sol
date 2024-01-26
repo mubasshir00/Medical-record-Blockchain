@@ -80,4 +80,8 @@ contract Contract {
     return PatIds;
   }
 
+  function getPatients(address _id) public view returns (string memory) {
+    return (Patients[_id].patHash);
+  }
+
 }

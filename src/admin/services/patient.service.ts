@@ -4,6 +4,7 @@ import { IPFSHTTPClient } from 'ipfs-http-client/dist/src/types';
 import { BlockchainService } from 'src/services/blockchain.service';
 import { IpfsService } from 'src/services/ipfs.service';
 import { Buffer } from "buffer";
+import { IPFS } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -86,7 +87,16 @@ export class PatientService {
   }
 
   getPatientDetails(patId: any): Promise<any> {
-    return new Promise((resolve) => {});
+    return new Promise((resolve) => {
+      this.bs.getContract().then((contract:any)=>{
+        contract.methods.getPatients(patId).call().then((ipfsHash: string)=>{
+          this.http.get(IPFS.localIPFSGet + ipfsHash).subscribe((data: any) => {
+            console.log(data);
+            resolve(data);
+          });
+        });
+      })
+    });
   }
 
   getAcccount() {
