@@ -9,6 +9,7 @@ contract Contract {
   Roles.Role private admin;
   Roles.Role private doctor;
   Roles.Role private patient;
+  Roles.Role private insurance;
 
   struct Doctor {
     address id;
@@ -20,12 +21,20 @@ contract Contract {
     string patHash;
   }
 
+  struct Insurance {
+    address id;
+    string insHash;
+  }
+
   mapping(address => Doctor) Doctors;
 
   mapping(address => Patient) Patients;
 
+  mapping(address => Insurance) Insurances;
+
   address[] public DrIDs;
   address[] public PatIds;
+  address[] public InsIds;
 
   constructor() {
     admin.add(msg.sender);
@@ -82,6 +91,30 @@ contract Contract {
 
   function getPatients(address _id) public view returns (string memory) {
     return (Patients[_id].patHash);
+  }
+
+
+  //insurance
+
+  function addInsuranceInfo(address ins_id, string memory _insInfo_Hash) public {
+    require(admin.has(msg.sender), "Only For Admin");
+
+    Insurance storage insInfo = Insurances[ins_id];
+
+    insInfo.id = ins_id;
+    insInfo.insHash = _insInfo_Hash;
+    InsIds.push(ins_id);
+
+    insurance.add(ins_id);
+
+  }
+
+  function getAllInsurances() public view returns (address[] memory) {
+    return InsIds;
+  }
+
+  function getInsurance(address _id) public view returns (string memory) {
+    return (Insurances[_id].insHash);
   }
 
 }
