@@ -36,6 +36,50 @@ export class InsuranceComponent implements OnInit {
     this.GetInsurances();
   }
 
+  onSubmit() {
+    this.show = true;
+    this.msg_text = 'Adding Insurance to the Network...';
+    console.log(this.model);
+    this.checkAddProgress();
+    this.warn = false;
+    this.success = false;
+    this.insuranceService
+      .addInsurance(this.model.patID, this.model)
+      .then((r: any) => {
+        this.success = true;
+        this.msg_text = 'Data added to IPFS...';
+        this.msg_text += '<br>User Added to the Blockchain';
+        console.log('User added Successfully');
+
+        this.model = {};
+      })
+      .catch((er: any) => {
+        this.warn = true;
+        this.msg_text =
+          'Adding Doctor Failed<br> <small class="fw-light text-danger"><b>"</b>' +
+          this.model.docID +
+          '<b>"</b></small><br>1.not a valid address or <br>2.Already have a role';
+        console.log(er);
+      });
+  }
+
+  checkAddProgress() {
+    console.log('Checking progress');
+
+    let checkProgress = setInterval(() => {
+      if (this.insuranceService.added) {
+        this.msg_text = 'Patient Added to the network';
+        this.success = true;
+        clearInterval(checkProgress);
+      }
+      if (this.insuranceService.failed) {
+        this.warn = true;
+        this.msg_text = 'Patient adding Failed';
+        clearInterval(checkProgress);
+      }
+    }, 500);
+  }
+
   loadInsuranceDetails() {
     console.log(this.Insurances);
     this.InsuranceDetails = [];
@@ -72,5 +116,10 @@ export class InsuranceComponent implements OnInit {
         this.showProgressCard = false;
       }
     });
+  }
+
+  onClose() {
+    this.show = false;
+    this.warn = false;
   }
 }

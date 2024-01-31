@@ -17,7 +17,6 @@ export class PatientComponent implements OnInit {
   };
 
   Patients: string[] = [];
-
   PatientDetails: any = [];
 
   show: boolean = false;

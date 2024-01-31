@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <div>
+    <button
+      class="btn btn-sm btn-primary"
+      id="pills-home-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-home"
+      type="button"
+      role="tab"
+      aria-controls="pills-home"
+      aria-selected="true"
+      (click)="GetInsurances()"
+    >
+      View Insurance
+    </button>
+  </div>
+   <div >
+    <div class="content" *ngIf="InsuranceDetails.length >= 1">
+      <div class="card mt-2" *ngFor="let Docdetails of InsuranceDetails">
+        <div class="doctor w-100 p-2 d-flex flex-row align-items-center">
+          <div class="doc-image">
+            <img
+              class="border border-1 border-secondary rounded-circle p-1"
+              [src]="
+                Docdetails.imageHash || '../../../assets/images/doctor.png'
+              "
+              alt="Doctor Image"
+              width="150px"
+              height="150px"
+            />
+          </div>
+          <div class="doc-info d-flex flex-column">
+            <div class="col">
+              <div class="row py-2">
+                <div class="col-md-12">
+                  <b>InSus Id: </b>
+                  <span class="docID">
+                    <b>{{ Docdetails.patID }}</b></span
+                  >
+                </div>
+              </div>
+              <div class="row-md-12 d-flex flex-row justify-content-between">
+                <div class="col-md-12 d-flex flex-column">
+                  <div>
+                    <b>Full Name : </b>
+                    <span class="fName"
+                    >{{ Docdetails.fName }} {{ Docdetails.lName }}</span
+                    >
+                  </div>
+                  
+                  
+                </div>
+                <div class="col-md-12 d-flex flex-column">
+                  <div>
+                    <b>Email : </b
+                    ><span class="emailID">{{ Docdetails.emailID }}</span>
+                  </div>
+                  <div>
+                    <b>Phone: </b
+                    ><span class="phone">{{ Docdetails.phone }}</span>
+                  </div>
+                  <div>
+                    <b>City </b><span class="city">{{ Docdetails.city }}</span>
+                  </div>
+                  <div>
+                    <b>State: </b
+                    ><span class="state">{{ Docdetails.state }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="showProgressCard"
+      class="prgrs mt-3 d-flex flex-column align-items-center"
+    >
+      <label for="progress">{{ progressMsg }}</label>
+      <progress id="progress"></progress>
+    </div>
+
+    <div
+      class="nill d-flex flex-column justify-content-center align-items-center text-center"
+      *ngIf="loadComplete && !loaded"
+    >
+      No Doctors In the Network Add Doctors using the above tab<span
+      class="text-primary fw-bold"
+    >Add Doctor</span
+    >
+      <button class="btn btn-primary" (click)="GetDoctors()">Retry</button>
+    </div>
+  </div>
+  <div class="container mb-4">
+    <form [noValidate]="false" #docForm="ngForm" (ngSubmit)="onSubmit()">
+      <h3 class="h3 my-3">Add Patient to the Network</h3>
+      <div class="row form-row">
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label>
+              First Name
+              <sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup>
+            </label>
+            <input [(ngModel)]="model.fName" name="fName" id="fname" type="text" class="form-control"
+              placeholder="first name" required />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label>Last Name<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <input [(ngModel)]="model.lName" name="lName" id="lname" type="text" class="form-control"
+              placeholder="last name" />
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label>Mobile<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <input [(ngModel)]="model.phone" name="phone" id="mob" type="text" class="form-control" placeholder="mobile"
+              required />
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <label>Patient Id<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <input [(ngModel)]="model.patID" name="docID" id="accid" type="text" class="form-control"
+              placeholder="patient account id" required />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label>City<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <input [(ngModel)]="model.city" name="city" id="city" type="text" class="form-control" placeholder="city"
+              required />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label>State</label>
+            <input [(ngModel)]="model.state" name="state" id="state" type="text" class="form-control"
+              placeholder="state" />
+          </div>
+        </div>
+      </div>
+      <button type="submit" id="btn" class="btn btn-primary mb-3">
+        Add Insurance
+      </button>
+    </form>
+  </div>
+
+    <app-progress_card
+    [success]="success"
+    [show]="show"
+    [msg_text]="msg_text"
+    [warn]="warn"
+    (retry)="onSubmit()"
+    (close)="onClose()"
+  >
+  </app-progress_card>
+</div>
