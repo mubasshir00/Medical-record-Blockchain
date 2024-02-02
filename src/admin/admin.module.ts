@@ -14,6 +14,7 @@ import { CardComponent } from './dashboard-home/card/card.component';
 import { PatientComponent } from './patient/patient.component';
 import { UtilsModule } from 'src/utils/utils.module';
 import { HttpClientModule } from '@angular/common/http';
+import { InsuranceComponent } from './insurance/insurance.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     AddComponent,
     DashboardHomeComponent,
     CardComponent,
-    PatientComponent
+    PatientComponent,
+    InsuranceComponent
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, UtilsModule, HttpClientModule],
 

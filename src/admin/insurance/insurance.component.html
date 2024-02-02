@@ -94,7 +94,7 @@
   </div>
   <div class="container mb-4">
     <form [noValidate]="false" #docForm="ngForm" (ngSubmit)="onSubmit()">
-      <h3 class="h3 my-3">Add Patient to the Network</h3>
+      <h3 class="h3 my-3">Add Insurance to the Network</h3>
       <div class="row form-row">
         <div class="col-12 col-sm-6">
           <div class="form-group">
@@ -124,9 +124,9 @@
 
         <div class="col-12">
           <div class="form-group">
-            <label>Patient Id<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
+            <label>Insurance Id<sup class="fas fa-asterisk fw-normal text-danger" style="font-size: 8px;"></sup></label>
             <input [(ngModel)]="model.patID" name="docID" id="accid" type="text" class="form-control"
-              placeholder="patient account id" required />
+              placeholder="Insurance account id" required />
           </div>
         </div>
         <div class="col-12 col-sm-6">

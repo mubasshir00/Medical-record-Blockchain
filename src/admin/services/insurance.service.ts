@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IPFSHTTPClient } from 'ipfs-http-client/dist/src/types';
 import { BlockchainService } from "src/services/blockchain.service";
+import { Buffer } from 'buffer';
 import { IpfsService } from "src/services/ipfs.service";
 import { IPFS } from 'src/environments/environment';
 @Injectable({
@@ -42,7 +43,7 @@ export class InsuranceSerivce {
         this.bs.getCurrentAccount().then((a) => {
           this.addRecord(data).then((ipfsHash) => {
             c.methods
-              .addPatInfo(insurance_id, ipfsHash)
+              .addInsuranceInfo(insurance_id, ipfsHash)
               .send({ from: a })
               .on('confirmation', (result: any) => {
                 if (result) {
@@ -63,7 +64,7 @@ export class InsuranceSerivce {
     return new Promise((resolve) => {
       this.bs.getContract().then((contract: any) => {
         contract.methods
-          .getPatients(patId)
+          .getInsurances(patId)
           .call()
           .then((ipfsHash: string) => {
             this.http
@@ -114,7 +115,10 @@ export class InsuranceSerivce {
     this.progressMsg = '';
     this.showProgressCard = false;
   }
+
   async addRecord(data: any) {
+    console.log({data});
+    
     let IPFSHash = await (
       await this.ipfs.add(Buffer.from(JSON.stringify(data)))
     ).path;

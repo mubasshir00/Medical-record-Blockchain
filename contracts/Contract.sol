@@ -113,7 +113,7 @@ contract Contract {
     return InsIds;
   }
 
-  function getInsurance(address _id) public view returns (string memory) {
+  function getInsurances(address _id) public view returns (string memory) {
     return (Insurances[_id].insHash);
   }
 
